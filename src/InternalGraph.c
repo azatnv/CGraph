@@ -1,9 +1,9 @@
 #include "Graph.h"
-Graph init(int size)
+Graph init(unsigned int size)
 {
 	Graph graph;
 	graph.head = (Node**)malloc(size * sizeof(Node*));
-	for (int i = 0; i < size; i++)
+	for (unsigned int i = 0; i < size; i++)
 	{
 		graph.head[i] = (Node*)malloc(sizeof(Node));
 		graph.head[i]->elem[0] = -1;
@@ -17,10 +17,10 @@ Graph init(int size)
 
 
 
-Graph addEdge(Graph g, int key1, int key2, int weight)
+Graph addEdge(Graph g, unsigned int key1, unsigned int key2, unsigned int weight)
 {
-	Node* ptr1 = (Node*)malloc(sizeof(Node)); //создаваемый узел
-	Node* ptr2 = (Node*)malloc(sizeof(Node)); //создаваемый узел
+	Node* ptr1 = (Node*)malloc(sizeof(Node));
+	Node* ptr2 = (Node*)malloc(sizeof(Node));
 	Node* node;
 	ptr1->elem[1] = ptr2->elem[1] = weight;
 	ptr1->elem[0] = key2;
@@ -42,7 +42,7 @@ Graph addEdge(Graph g, int key1, int key2, int weight)
 	return g;
 }
 
-Graph addNode(Graph g, int key) 
+Graph addNode(Graph g, unsigned int key)
 {
 	if (key >= g.size)
 		g = RebuildEdge(g, key, 0);
@@ -50,17 +50,17 @@ Graph addNode(Graph g, int key)
 	return g;
 }
 
-Graph RebuildEdge(Graph g, int key1, int key2)
+Graph RebuildEdge(Graph g, unsigned int key1, unsigned int key2)
 {
-	int max = key1;
-	int prevSize = g.size;
+	unsigned int max = key1;
+	unsigned int prevSize = g.size;
 	if (max < key2)
 		max = key2;
 	if (prevSize <= max)
 	{
 		g.head = (Node**)realloc(g.head, (max + 1) * sizeof(Node*));
 		g.size = max + 1;
-		for (int i = prevSize; i <= max; i++)
+		for (unsigned int i = prevSize; i <= max; i++)
 		{
 			g.head[i] = (Node*)malloc(sizeof(Node));
 			g.head[i]->next = NULL;
@@ -74,19 +74,21 @@ Graph RebuildEdge(Graph g, int key1, int key2)
 
 
 
-void deleteEdge(Graph g, int key1, int key2)
+void deleteEdge(Graph g, unsigned int key1, unsigned int key2)
 {
-	if (key1 >= g.size || key2 >= g.size || g.head[key1]->elem[0] != key1 || g.head[key2]->elem[0] != key2)
+	int key11 = (int)key1;
+	int key22 = (int)key2;
+	if (key1 >= g.size || key2 >= g.size || g.head[key1]->elem[0] != key11 || g.head[key2]->elem[0] != key22)
 		return;
 	Delete(g, key1, key2);
 	Delete(g, key2, key1);
 }
 
-void deleteNode(Graph g, int key)
+void deleteNode(Graph g, unsigned int key)
 {
 	if (key >= g.size || g.head[key]->elem[0] == -1)
 		return;
-	for (int i = 0; i < g.size; i++) 
+	for (unsigned int i = 0; i < g.size; i++)
 		if (g.head[i]->elem[0] != -1)
 		{
 			Delete(g, key, i);
@@ -101,7 +103,7 @@ void deleteNode(Graph g, int key)
 
 void Destruct(Graph g)
 {
-	for (int i = 0; i < g.size; i++)
+	for (unsigned int i = 0; i < g.size; i++)
 	{
 		deleteNode(g, i);
 		free(g.head[i]);
@@ -109,16 +111,18 @@ void Destruct(Graph g)
 	free(g.head);
 }
 
-void Delete(Graph h, int key1, int key2)
+void Delete(Graph h, unsigned int key1, unsigned int key2)
 {
 	Node *current, *previous;
 	previous = NULL;
 	current = h.head[key1];
-	if (current->elem[0] != key1 || h.head[key2]->elem[0] != key2)
+	int key11 = (int)key1;
+	int key22 = (int)key2;
+	if (current->elem[0] != key11 || h.head[key2]->elem[0] != key22)
 		return;
 	while (current)
 	{
-		if (current->elem[0] == key2 && h.head[key1] != current)
+		if (current->elem[0] == key22 && h.head[key1] != current)
 		{
 			if (current->next != NULL)
 			{
@@ -145,34 +149,37 @@ void Delete(Graph h, int key1, int key2)
 
 
 
-int searchNode(Graph g, int key) 
+int searchNode(Graph g, unsigned int key)
 {
 	if (key >= g.size || g.head[key]->elem[0] == -1)
 		return 0;
 	return 1;
 }
 
-int searchEdge(Graph g, int key1, int key2)
+int searchEdge(Graph g, unsigned int key1, unsigned int key2)
 {
+	int key22 = (int)key2;
 	if (searchNode(g, key1) == 0 || searchNode(g, key2) == 0)
 		return -1;
 	Node* current = g.head[key1];
 	while (current)
 	{
-		if (current->elem[0] == key2)
+		if (current->elem[0] == key22)
 			return current->elem[1];
 		current = current->next;
 	}
 	return -1;
 }
 
-int searchEdgeWithWeight(Graph g, int key1, int key2, int weight) {
+int searchEdgeWithWeight(Graph g, unsigned int key1, unsigned int key2, unsigned int weight) {
+	int weightt = (int)weight;
+	int key22 = (int)key2;
 	if (searchNode(g, key1) == 0 || searchNode(g, key2) == 0)
 		return 0;
 	Node* current = g.head[key1];
 	while (current)
 	{
-		if (current->elem[0] == key2 && current->elem[1] == weight)
+		if (current->elem[0] == key22 && current->elem[1] == weightt)
 			return 1;
 		current = current->next;
 	}
@@ -186,7 +193,7 @@ int equals(Graph g1, Graph g2)
 		return 0;
 	else
 	{
-		for (int i = 0; i < g1.size; i++)
+		for (unsigned int i = 0; i < g1.size; i++)
 		{
 			if (g1.head[i]->elem[0] != g2.head[i]->elem[0])
 				return 0;
@@ -208,9 +215,12 @@ int equals(Graph g1, Graph g2)
 int size(Graph g)
 {
 	int result = 0;
-	for (int i = 0; i < g.size; i++)
-		if (g.head[i]->elem[0] == i)
+	for (unsigned int i = 0; i < g.size; i++)
+	{
+		int t = (int)i;
+		if (g.head[i]->elem[0] == t)
 			result++;
+	}
 	return result;
 }
 
@@ -218,7 +228,7 @@ void GraphToString(Graph g, FILE* fileout)
 {
 	Node* ptr;
 	fprintf(fileout, "Size of Graph: %d\n", size(g));
-	for (int i = 0; i < g.size; i++)
+	for (unsigned int i = 0; i < g.size; i++)
 	{
 		if (g.head[i]->elem[0] != -1) {
 			fprintf(fileout, "\nVertex %d connected with: ", i);

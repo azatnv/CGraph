@@ -21,10 +21,10 @@ int main(int argc, char* argv[])
 		else
 		{
 			Graph g = init(2);
-			int key1;
-			int key2;
-			int weight;
-			while (fscanf(filein, "%i%i%i", &key1, &key2, &weight) != EOF) {
+			unsigned int key1;
+			unsigned int key2;
+			unsigned int weight;
+			while (fscanf(filein, "%u%u%u", &key1, &key2, &weight) != EOF) {
 				g = addEdge(g, key1, key2, weight);
 			}
 			GraphToString(g, fileout);

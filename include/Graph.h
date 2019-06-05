@@ -11,23 +11,23 @@ typedef struct Node {
 
 typedef struct Graph {
 	Node** head;
-	int size;
+	unsigned int size;
 }Graph;
 
-Graph init(int size);
+Graph init(unsigned int size);
 int equals(Graph g1, Graph g2);
 int size(Graph g);
 
-Graph addNode(Graph g, int key);
-Graph addEdge(Graph g, int key1, int key2, int weight);
-Graph RebuildEdge(Graph g, int key1, int key2);
+Graph addNode(Graph g, unsigned int key);
+Graph addEdge(Graph g, unsigned int key1, unsigned int key2, unsigned int weight);
+Graph RebuildEdge(Graph g, unsigned int key1, unsigned int key2);
 
-int searchNode(Graph g, int key);
-int searchEdge(Graph g, int key1, int key2);
-int searchEdgeWithWeight(Graph g, int key1, int key2, int weight);
+int searchNode(Graph g, unsigned int key);
+int searchEdge(Graph g, unsigned int key1, unsigned int key2);
+int searchEdgeWithWeight(Graph g, unsigned int key1, unsigned int key2, unsigned int weight);
 
-void deleteNode(Graph g, int key);
-void deleteEdge(Graph h, int key1, int key2);
-void Delete(Graph h, int key1, int key2);
+void deleteNode(Graph g, unsigned int key);
+void deleteEdge(Graph h, unsigned int key1, unsigned int key2);
+void Delete(Graph h, unsigned int key1, unsigned int key2);
 void Destruct(Graph g);
 void GraphToString(Graph g, FILE* fileout);

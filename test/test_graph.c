@@ -9,39 +9,39 @@ void test_graph()
 	g = addEdge(g, 2, 0, 5);
 
 	if (searchEdge(g, 0, 1) != 5 || searchEdge(g, 2, 1) != 5 || searchEdge(g, 2, 0) != 5 || searchEdge(g, 0, 3) != -1)
-		printf("Error in the test: SearchEdge\n");
+		printf("  Error in the test: SearchEdge\n");
 	else
 		printf("Success: SearchEdge\n");
 	if (searchEdgeWithWeight(g, 0, 1, 5) != 1 || searchEdgeWithWeight(g, 0, 1, 10) != 0)
-		printf("Error in the test: SearchEdgeWhitWeight\n");
+		printf("  Error in the test: SearchEdgeWhitWeight\n");
 	else
-		printf("Success: SearchEdgeWhitWeight\n");
+		printf("  Success: SearchEdgeWhitWeight\n");
 	if (searchNode(g, 0) != 1 || searchNode(g, 3) != 0)
-		printf("Error in the test: SearchNode\n");
+		printf("  Error in the test: SearchNode\n");
 	else
-		printf("Success: SearchNode\n");
+		printf("  Success: SearchNode\n");
 
 	if (searchEdgeWithWeight(g, 0, 1, 5) != 1 || searchEdgeWithWeight(g, 1, 2, 5) != 1 || searchEdgeWithWeight(g, 0, 2, 5) != 1)
-		printf("Error in the test: AddEdge\n");
+		printf("  Error in the test: AddEdge\n");
 	else
-		printf("Success: AddEdge\n");
+		printf("  Success: AddEdge\n");
 
 	g = addNode(g, 3);
 	if (searchNode(g, 3) != 1 || size(g) != 4)
-		printf("Error in the test: AddNode\n");
+		printf("  Error in the test: AddNode\n");
 	else
-		printf("Success: AddNode\n");
+		printf("  Success: AddNode\n");
 
 	deleteEdge(g, 0, 1);
 	deleteNode(g, 2);
 	if (searchEdge(g, 0, 1) != -1)
-		printf("Error in the test: DeleteEdge\n");
+		printf("  Error in the test: DeleteEdge\n");
 	else
-		printf("Success: DeleteEdge\n");
+		printf("  Success: DeleteEdge\n");
 	if (searchEdge(g, 0, 2) != -1 || searchNode(g, 2) == 1)
-		printf("Error in the test: DeleteNode\n");
+		printf("  Error in the test: DeleteNode\n");
 	else
-		printf("Success: DeleteNode\n");
+		printf("  Success: DeleteNode\n");
 	Destruct(g);
 
 	Graph g1 = init(3);
@@ -53,13 +53,13 @@ void test_graph()
 	g2 = addEdge(g2, 1, 2, 6);
 	g2 = addNode(g2, 10);
 	if (size(g1) != 4 && size(g2) != 4)
-		printf("Error in the test: size\n");
+		printf("  Error in the test: size\n");
 	else 
-		printf("Success: size\n");
+		printf("  Success: size\n");
 	if (equals(g1, g2) != 1)
-		printf("Error in the test: Equals\n");
+		printf("  Error in the test: Equals\n");
 	else 
-		printf("Success: Equals\n");
+		printf("  Success: Equals\n");
 	Destruct(g1);
 	Destruct(g2);
 }
